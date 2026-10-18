@@ -131,3 +131,7 @@ public function totalordermag_f128ptr {
   sbb eax, -1
   ret
 }
+
+public const variable __libc_single_threaded_compat {
+  byte 0
+}

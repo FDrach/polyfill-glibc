@@ -137,7 +137,12 @@ build build/x86_64/test/twalk_r: link build/x86_64/test/twalk_r.o
   link_opt = -ldl
 build build/x86_64/test/twalk_r.o: cc test/x86_64/twalk_r.c
 
-build test/x86_64: phony build/x86_64/test/arc4random.txt build/x86_64/test/glibc_2_38.txt build/x86_64/test/qsort_r.txt build/x86_64/test/memfd_pread_pwrite.txt build/x86_64/test/nan.txt build/x86_64/test/stdbit.txt build/x86_64/test/totalorder.txt build/x86_64/test/twalk_r.txt
+build build/x86_64/test/single_threaded.txt: run build/x86_64/test/single_threaded build/x86_64/polyfills.so
+build build/x86_64/test/single_threaded: link build/x86_64/test/single_threaded.o
+  link_opt = -ldl -pthread
+build build/x86_64/test/single_threaded.o: cc test/x86_64/single_threaded.c
+
+build test/x86_64: phony build/x86_64/test/arc4random.txt build/x86_64/test/glibc_2_38.txt build/x86_64/test/qsort_r.txt build/x86_64/test/memfd_pread_pwrite.txt build/x86_64/test/nan.txt build/x86_64/test/stdbit.txt build/x86_64/test/totalorder.txt build/x86_64/test/twalk_r.txt build/x86_64/test/single_threaded.txt
 
 build build/test/getauxval.txt: run build/test/getauxval_pf build/test/getauxval_imp.txt build/test/getauxval_imp_pf.txt
 build build/test/getauxval_imp_pf.txt: run_polyfill_glibc_txt build/test/getauxval_pf | polyfill-glibc
